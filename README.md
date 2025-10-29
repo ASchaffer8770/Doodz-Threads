@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧢 Doodz Threads  
+*A modern storefront built with Next.js, TailwindCSS, and clean UI principles.*
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-First, run the development server:
+---
+
+## 🧠 Overview
+
+**Doodz Threads** is a fully custom **Next.js storefront** designed for premium streetwear and print-on-demand collections.  
+Built from scratch with a **cinematic UI**, a glowing **responsive header**, and an upcoming **Design Studio** for user-generated apparel.
+
+> *Clothing your way — drops that hit different.*
+
+---
+
+## 🧱 Tech Stack
+
+| Tech | Purpose |
+|------|----------|
+| ⚡ **Next.js 15+** | React framework with hybrid SSR/SSG |
+| 🎨 **TailwindCSS 4** | Utility-first styling |
+| 💡 **Lucide React** | Icon system |
+| 🔥 **Vercel** | Hosting and continuous deployment |
+| 🧩 **TypeScript** | Safer, scalable development |
+
+---
+
+## 🚀 Local Development
 
 ```bash
+# Install dependencies
+npm install
+
+# Run dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# View your app
+http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📜 License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is licensed under the MIT License — see the LICENSE
+ file for details.
 
-## Learn More
+ 💬 Connect
 
-To learn more about Next.js, take a look at the following resources:
+👤 Alex Schaffer
+📧 GitHub Profile
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+💡 Built with passion, caffeine, and Tailwind glow.
+---
