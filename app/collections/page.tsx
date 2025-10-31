@@ -8,7 +8,7 @@ export default function CollectionsPage() {
         <div className="w-[700px] h-[700px] rounded-full bg-[#18FFEA]/10 blur-[140px] opacity-70" />
       </div>
 
-      <div className="relative z-10 text-center px-6 max-w-3xl">
+      <div className="relative z-10 text-center px-6 max-w-3xl mb-10">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
           Our <span className="text-[#18FFEA]">Collections</span>
         </h1>

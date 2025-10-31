@@ -9,7 +9,7 @@ export default function DropsPage() {
       </div>
 
       {/* Page content */}
-      <div className="relative z-10 px-6 max-w-4xl text-center">
+      <div className="relative z-10 px-6 max-w-4xl text-center mb-10">
         <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-6">
           Current <span className="text-[#18FFEA]">Drops</span>
         </h1>
