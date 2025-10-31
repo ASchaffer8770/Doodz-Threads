@@ -14,15 +14,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-900 text-white overflow-x-hidden">
-        {/* Header sits OUTSIDE of main */}
+      <body className="flex flex-col min-h-screen bg-gray-900 text-white overflow-x-hidden">
+        {/* Header */}
         <Header />
 
-        {/* main should contain ONE child: {children} */}
-        <main className="pt-20 m-0 p-0">
+        {/* Main content expands to fill remaining space */}
+        <main className="flex-grow">
           {children}
         </main>
 
+        {/* Footer stays anchored to bottom */}
         <Footer />
       </body>
     </html>
