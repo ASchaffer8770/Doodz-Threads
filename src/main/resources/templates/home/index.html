@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title th:text="${title}">Doodz Threads</title>
+
+    <!-- Tailwind CDN (great for POC; we’ll switch to a build pipeline later) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root { --dt-teal: #18FFEA; --dt-black: #0A0A0A; --dt-card: #121212; }
+        ::selection { background: rgba(24,255,234,.25); }
+        .teal-glow { box-shadow: 0 0 22px rgba(24,255,234,.25); }
+        .teal-glow-strong { box-shadow: 0 0 40px rgba(24,255,234,.35); }
+    </style>
+</head>
+
+<body class="min-h-screen bg-[#0A0A0A] text-white">
+<!-- Global header fragment -->
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main>
+    <!-- HERO -->
+    <section class="relative overflow-hidden">
+        <!-- subtle background glow -->
+        <div class="pointer-events-none absolute inset-0">
+            <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full opacity-25 blur-3xl"
+                 style="background: radial-gradient(circle, rgba(24,255,234,.45), transparent 60%);"></div>
+            <div class="absolute -bottom-40 right-0 h-96 w-96 rounded-full opacity-15 blur-3xl"
+                 style="background: radial-gradient(circle, rgba(255,255,255,.18), transparent 60%);"></div>
+        </div>
+
+        <div class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-10 px-4 py-14 md:grid-cols-2 md:px-6 md:py-20">
+            <!-- Copy -->
+            <div class="relative">
+                <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+                    <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
+                    Limited drops • Premium blanks • Built to last
+                </p>
+
+                <h1 class="mt-6 text-4xl font-extrabold tracking-tight md:text-6xl">
+                    Bold Threads.
+                    <span class="block">Zero Compromise.</span>
+                </h1>
+
+                <div class="mt-3 h-1 w-24 rounded-full" style="background:#18FFEA;"></div>
+
+                <!-- Uses your controller-provided tagline -->
+                <p class="mt-6 max-w-prose text-base text-white/75 md:text-lg" th:text="${tagline}">
+                    Custom streetwear • Printed worldwide
+                </p>
+
+                <p class="mt-4 max-w-prose text-base text-white/75 md:text-lg">
+                    Clean designs, premium feel, and prints that don’t quit.
+                    Built for people who want to stand out — without screaming for attention.
+                </p>
+
+                <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                    <a href="#drops"
+                       class="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow hover:teal-glow-strong"
+                       style="background:#18FFEA;">
+                        Shop drops
+                    </a>
+
+                    <a href="#drop-list"
+                       class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">
+                        Join the drop list
+                    </a>
+                </div>
+
+                <div class="mt-10 grid grid-cols-3 gap-4 text-xs text-white/60">
+                    <div class="rounded-xl border border-white/10 bg-[#121212] p-4">
+                        <div class="text-white/90 font-semibold">Premium</div>
+                        <div class="mt-1">Blanks + feel</div>
+                    </div>
+                    <div class="rounded-xl border border-white/10 bg-[#121212] p-4">
+                        <div class="text-white/90 font-semibold">Fast</div>
+                        <div class="mt-1">On-demand print</div>
+                    </div>
+                    <div class="rounded-xl border border-white/10 bg-[#121212] p-4">
+                        <div class="text-white/90 font-semibold">Limited</div>
+                        <div class="mt-1">Drop culture</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual -->
+            <div class="relative">
+                <div class="aspect-[4/5] w-full overflow-hidden rounded-3xl border border-white/10 bg-[#121212]">
+                    <div class="relative h-full w-full">
+                        <div class="absolute inset-0 opacity-40"
+                             style="background: radial-gradient(circle at 20% 20%, rgba(24,255,234,.35), transparent 45%),
+                          radial-gradient(circle at 80% 60%, rgba(255,255,255,.16), transparent 55%);"></div>
+
+                        <!-- Bottom-left stack (Featured drop + Next drop) -->
+                        <div class="absolute bottom-6 left-6 right-6 flex flex-col gap-3">
+                            <div class="rounded-2xl border border-white/10 bg-black/40 p-4 backdrop-blur">
+                                <p class="text-xs text-white/70">Featured drop</p>
+                                <p class="mt-1 text-lg font-semibold">“Stingray” Series</p>
+                                <p class="mt-2 text-sm text-white/70">Teal accents. Dark base. Loud details.</p>
+                            </div>
+
+                            <div class="w-fit rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 teal-glow">
+                                <p class="text-xs text-white/60">Next drop</p>
+                                <p class="text-sm font-semibold">Soon.</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST STRIP -->
+    <section class="border-y border-white/10 bg-black/30">
+        <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-3 px-4 py-6 text-sm text-white/70 md:px-6">
+        <span class="inline-flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full" style="background:#18FFEA;"></span> Premium fabrics only
+        </span>
+            <span class="text-white/30">•</span>
+            <span class="inline-flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full" style="background:#18FFEA;"></span> Limited-run mindset
+        </span>
+            <span class="text-white/30">•</span>
+            <span class="inline-flex items-center gap-2">
+          <span class="h-2 w-2 rounded-full" style="background:#18FFEA;"></span> Built for daily wear
+        </span>
+        </div>
+    </section>
+
+    <!-- DROPS -->
+    <section id="drops" class="mx-auto w-full max-w-6xl px-4 py-14 md:px-6 md:py-20">
+        <div class="flex items-end justify-between gap-6">
+            <div>
+                <h2 class="text-2xl font-bold md:text-3xl">Featured drops</h2>
+                <p class="mt-2 text-white/70">Curated pieces. No clutter.</p>
+            </div>
+            <a href="#drop-list" class="hidden text-sm font-semibold text-white/70 hover:text-white md:inline-flex">
+                Want early access? <span class="ml-2 font-semibold" style="color:#18FFEA;">Join the list →</span>
+            </a>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div class="group rounded-3xl border border-white/10 bg-[#121212] p-5 hover:border-white/20">
+                <div class="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                    <div class="h-full w-full opacity-40"
+                         style="background: radial-gradient(circle at 30% 30%, rgba(24,255,234,.35), transparent 55%);"></div>
+                </div>
+                <div class="mt-4 flex items-start justify-between gap-3">
+                    <div>
+                        <p class="font-semibold">Stingray Tee</p>
+                        <p class="text-sm text-white/60">Black / Teal accent</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white/80">$—</p>
+                </div>
+                <button class="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 hover:bg-white/10">
+                    View
+                </button>
+            </div>
+
+            <div class="group rounded-3xl border border-white/10 bg-[#121212] p-5 hover:border-white/20">
+                <div class="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                    <div class="h-full w-full opacity-40"
+                         style="background: radial-gradient(circle at 70% 30%, rgba(24,255,234,.35), transparent 55%);"></div>
+                </div>
+                <div class="mt-4 flex items-start justify-between gap-3">
+                    <div>
+                        <p class="font-semibold">Stingray Hoodie</p>
+                        <p class="text-sm text-white/60">Heavyweight feel</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white/80">$—</p>
+                </div>
+                <button class="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 hover:bg-white/10">
+                    View
+                </button>
+            </div>
+
+            <div class="group rounded-3xl border border-white/10 bg-[#121212] p-5 hover:border-white/20">
+                <div class="aspect-square overflow-hidden rounded-2xl border border-white/10 bg-black/30">
+                    <div class="h-full w-full opacity-40"
+                         style="background: radial-gradient(circle at 50% 70%, rgba(24,255,234,.35), transparent 55%);"></div>
+                </div>
+                <div class="mt-4 flex items-start justify-between gap-3">
+                    <div>
+                        <p class="font-semibold">Stingray Long Sleeve</p>
+                        <p class="text-sm text-white/60">Clean + sharp</p>
+                    </div>
+                    <p class="text-sm font-semibold text-white/80">$—</p>
+                </div>
+                <button class="mt-4 w-full rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 hover:bg-white/10">
+                    View
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- QUALITY -->
+    <section id="quality" class="border-t border-white/10 bg-black/30">
+        <div class="mx-auto w-full max-w-6xl px-4 py-14 md:px-6 md:py-20">
+            <h2 class="text-2xl font-bold md:text-3xl">Quality, explained</h2>
+            <p class="mt-2 text-white/70">Simple process. Premium outcome.</p>
+
+            <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+                <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+                    <p class="text-xs text-white/60">01</p>
+                    <p class="mt-2 text-lg font-semibold">Design</p>
+                    <p class="mt-2 text-sm text-white/70">Intentional graphics that look good in real life, not just online.</p>
+                    <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+                </div>
+                <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+                    <p class="text-xs text-white/60">02</p>
+                    <p class="mt-2 text-lg font-semibold">Print</p>
+                    <p class="mt-2 text-sm text-white/70">On-demand printing with durability in mind — no throwaway feel.</p>
+                    <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+                </div>
+                <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+                    <p class="text-xs text-white/60">03</p>
+                    <p class="mt-2 text-lg font-semibold">Ship</p>
+                    <p class="mt-2 text-sm text-white/70">Packed clean. Shipped fast. Made to be worn, not shelved.</p>
+                    <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STORY -->
+    <section id="story" class="mx-auto w-full max-w-6xl px-4 py-14 md:px-6 md:py-20">
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+            <div>
+                <h2 class="text-2xl font-bold md:text-3xl">Built independent</h2>
+                <p class="mt-4 text-white/75">
+                    Doodz Threads is for people who want their clothes to say something — without saying too much.
+                </p>
+                <p class="mt-4 text-white/75">
+                    No mass-production energy. No trend-chasing.
+                    <span style="color:#18FFEA;" class="font-semibold">Just clean drops</span> and quality you can feel.
+                </p>
+            </div>
+
+            <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+                <p class="text-sm text-white/70">What you can expect</p>
+                <ul class="mt-4 space-y-3 text-sm text-white/75">
+                    <li class="flex gap-3">
+                        <span class="mt-1 h-2 w-2 rounded-full" style="background:#18FFEA;"></span>
+                        Curated releases instead of endless SKUs
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="mt-1 h-2 w-2 rounded-full" style="background:#18FFEA;"></span>
+                        Premium feel, not “cheap print shop” quality
+                    </li>
+                    <li class="flex gap-3">
+                        <span class="mt-1 h-2 w-2 rounded-full" style="background:#18FFEA;"></span>
+                        Drops you’ll actually want to wear
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- DROP LIST -->
+    <section id="drop-list" class="border-t border-white/10 bg-black/30">
+        <div class="mx-auto w-full max-w-6xl px-4 py-14 md:px-6 md:py-20">
+            <div class="rounded-3xl border border-white/10 bg-[#0A0A0A] p-8 md:p-10"
+                 style="box-shadow: 0 0 0 1px rgba(24,255,234,.18), 0 0 40px rgba(24,255,234,.10);">
+                <div class="grid grid-cols-1 gap-8 md:grid-cols-2 md:items-center">
+                    <div>
+                        <h3 class="text-2xl font-bold md:text-3xl">Get early access</h3>
+                        <p class="mt-3 text-white/70">Join the drop list. No spam. Ever.</p>
+                    </div>
+
+                    <form class="flex flex-col gap-3 sm:flex-row">
+                        <input type="email"
+                               placeholder="you@email.com"
+                               class="w-full rounded-2xl border border-white/10 bg-[#121212] px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2"
+                               style="--tw-ring-color: #18FFEA;" />
+
+                        <button type="submit"
+                                class="w-full rounded-2xl px-5 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow sm:w-auto hover:teal-glow-strong"
+                                style="background:#18FFEA;">
+                            Join
+                        </button>
+                    </form>
+                </div>
+
+                <p class="mt-4 text-xs text-white/50">By joining, you agree to receive emails about drops and updates.</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="border-t border-white/10">
+    <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
+        <div class="flex items-center gap-2">
+            <span class="font-semibold text-white" th:text="${title}">Doodz Threads</span>
+            <span class="text-white/30">•</span>
+            <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span></span>
+        </div>
+
+        <div class="flex gap-6">
+            <a href="#" class="hover:text-white">Instagram</a>
+            <a href="#" class="hover:text-white">TikTok</a>
+            <a href="#" class="hover:text-white">Contact</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
