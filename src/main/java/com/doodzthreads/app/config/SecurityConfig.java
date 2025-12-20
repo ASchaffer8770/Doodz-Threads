@@ -22,6 +22,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/", "/login", "/signup",
+                                "/error",
                                 "/css/**", "/js/**", "/images/**", "/webjars/**",
                                 "/favicon.ico", "/assets/**"
                         ).permitAll()
@@ -29,7 +30,7 @@ public class SecurityConfig {
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/welcome", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )

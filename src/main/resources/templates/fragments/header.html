@@ -1,34 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
 <header th:fragment="siteHeader"
         class="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur">
     <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-        <!-- Logo -->
         <a href="/" class="group inline-flex items-center gap-2">
             <div class="h-8 w-8 rounded-lg border border-white/10 bg-[#121212] grid place-items-center">
                 <span class="text-sm font-extrabold tracking-tight text-white">DT</span>
             </div>
             <span class="text-sm font-semibold tracking-wide text-white">
-        DOODZ <span class="text-white/60">THREADS</span>
-      </span>
+                DOODZ <span class="text-white/60">THREADS</span>
+            </span>
         </a>
 
-        <!-- Desktop nav -->
-        <nav class="hidden items-center gap-6 md:flex">
-            <a href="#collections" class="text-sm text-white/70 hover:text-white">Collections</a>
-            <a href="#drops" class="text-sm text-white/70 hover:text-white">Drops</a>
-            <a href="#quality" class="text-sm text-white/70 hover:text-white">Quality</a>
-            <a href="#story" class="text-sm text-white/70 hover:text-white">Our Story</a>
-            <a href="#contact" class="text-sm text-white/70 hover:text-white">Contact Us</a>
-        </nav>
-
-        <!-- Actions -->
         <div class="flex items-center gap-3">
-            <!-- Join list -->
             <a href="#drop-list"
                class="hidden rounded-xl border border-white/10 bg-[#121212] px-3 py-2 text-sm font-medium text-white/80 hover:text-white md:inline-flex">
                 Join list
             </a>
 
-            <!-- Shop CTA -->
             <a href="#collections"
                class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-[#0A0A0A]"
                style="background:#18FFEA; box-shadow: 0 0 22px rgba(24,255,234,.25);">
@@ -36,22 +27,31 @@
             </a>
 
             <!-- Account -->
-            <a href="/login"
-               aria-label="Account"
-               class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#121212] text-white/80 hover:text-white hover:border-white/20">
-                <!-- User icon -->
-                <svg xmlns="http://www.w3.org/2000/svg"
-                     fill="none"
-                     viewBox="0 0 24 24"
-                     stroke-width="1.8"
-                     stroke="currentColor"
-                     class="h-5 w-5">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M4.5 20.25a7.5 7.5 0 0115 0" />
-                </svg>
-            </a>
+            <div class="flex items-center gap-3">
+                <div th:if="${loggedIn == true}" class="hidden sm:flex items-center gap-3">
+                    <span class="text-sm text-white/70">
+                        Hi, <span class="font-semibold text-white" th:text="${firstName}">Friend</span> 👋
+                    </span>
+                </div>
+
+                <a th:unless="${loggedIn == true}"
+                   href="/login"
+                   aria-label="Account"
+                   class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#121212] text-white/80 hover:text-white hover:border-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24"
+                         stroke-width="1.8" stroke="currentColor"
+                         class="h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M4.5 20.25a7.5 7.5 0 0115 0" />
+                    </svg>
+                </a>
+            </div>
         </div>
     </div>
 </header>
+
+</body>
+</html>

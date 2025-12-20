@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title th:text="${title}">Doodz Threads</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root { --dt-teal: #18FFEA; --dt-black: #0A0A0A; --dt-card: #121212; }
+    ::selection { background: rgba(24,255,234,.25); }
+    .teal-glow { box-shadow: 0 0 22px rgba(24,255,234,.25); }
+    .teal-glow-strong { box-shadow: 0 0 40px rgba(24,255,234,.35); }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[#0A0A0A] text-white">
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main>
+  <!-- MEMBER HERO -->
+  <section class="relative overflow-hidden">
+    <div class="pointer-events-none absolute inset-0">
+      <div class="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full opacity-25 blur-3xl"
+           style="background: radial-gradient(circle, rgba(24,255,234,.45), transparent 60%);"></div>
+      <div class="absolute -bottom-40 right-0 h-96 w-96 rounded-full opacity-15 blur-3xl"
+           style="background: radial-gradient(circle, rgba(255,255,255,.18), transparent 60%);"></div>
+    </div>
+
+    <div class="mx-auto w-full max-w-6xl px-4 py-14 md:px-6 md:py-20">
+      <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+        <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
+        Member access unlocked
+      </p>
+
+      <h1 class="mt-6 text-4xl font-extrabold tracking-tight md:text-6xl">
+        <span class="text-white/80">Welcome</span>
+        <span class="block" th:text="${firstName != null and !#strings.isEmpty(firstName)} ? ${firstName} : 'back'">back</span>
+      </h1>
+
+      <div class="mt-3 h-1 w-24 rounded-full" style="background:#18FFEA;"></div>
+
+      <p class="mt-6 max-w-prose text-base text-white/75 md:text-lg" th:text="${tagline}">
+        Members-only early access • Clean drops • Premium feel
+      </p>
+
+      <div class="mt-10 grid grid-cols-1 gap-5 md:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+          <p class="text-xs text-white/60">Early access</p>
+          <p class="mt-2 text-lg font-semibold">Next drop previews</p>
+          <p class="mt-2 text-sm text-white/70">See what’s coming before it hits the public site.</p>
+          <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+          <p class="text-xs text-white/60">Member perks</p>
+          <p class="mt-2 text-lg font-semibold">Limited links</p>
+          <p class="mt-2 text-sm text-white/70">Private access pages for limited runs and restocks.</p>
+          <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+          <p class="text-xs text-white/60">Drop alerts</p>
+          <p class="mt-2 text-lg font-semibold">No spam</p>
+          <p class="mt-2 text-sm text-white/70">Only drop dates, restocks, and important updates.</p>
+          <div class="mt-4 h-1 w-16 rounded-full" style="background:#18FFEA;"></div>
+        </div>
+      </div>
+
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row">
+        <a href="/#drops"
+           class="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow hover:teal-glow-strong"
+           style="background:#18FFEA;">
+          Browse featured drops
+        </a>
+
+        <a href="/#drop-list"
+           class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">
+          Join the drop list
+        </a>
+
+        <form th:action="@{/logout}" method="post" class="sm:ml-auto">
+          <button type="submit"
+                  class="w-full rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">
+            Logout
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-white/10">
+  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
+    <div class="flex items-center gap-2">
+      <span class="font-semibold text-white" th:text="${title}">Doodz Threads</span>
+      <span class="text-white/30">•</span>
+      <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span></span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

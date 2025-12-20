@@ -1,8 +1,11 @@
 package com.doodzthreads.app.controller;
 
 import com.doodzthreads.app.controller.dto.SignupRequest;
+import com.doodzthreads.app.security.DbUserDetailsService;
 import com.doodzthreads.app.service.AuthService;
 import jakarta.validation.Valid;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
+    private final DbUserDetailsService userDetailsService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(AuthService authService, DbUserDetailsService userDetailsService) {
         this.authService = authService;
+        this.userDetailsService = userDetailsService;
     }
 
     @GetMapping("/login")
@@ -49,7 +54,15 @@ public class AuthController {
             return "auth/signup";
         }
 
-        return "redirect:/login?created";
-    }
+        // Auto-login after signup
+        var userDetails = userDetailsService.loadUserByUsername(form.getEmail());
+        var authToken = new UsernamePasswordAuthenticationToken(
+                userDetails,
+                null,
+                userDetails.getAuthorities()
+        );
+        SecurityContextHolder.getContext().setAuthentication(authToken);
 
+        return "redirect:/welcome";
+    }
 }
