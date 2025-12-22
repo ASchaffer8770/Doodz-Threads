@@ -24,13 +24,16 @@ public class SecurityConfig {
                                 "/", "/login", "/signup",
                                 "/error",
                                 "/css/**", "/js/**", "/images/**", "/webjars/**",
-                                "/favicon.ico", "/assets/**"
+                                "/favicon.ico", "/assets/**",
+                                "/drops/**", "/collections/**"   // public browsing later
                         ).permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/account/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/welcome", true)
+                        .defaultSuccessUrl("/account", true)
                         .failureUrl("/login?error")
                         .permitAll()
                 )

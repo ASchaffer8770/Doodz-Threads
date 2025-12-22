@@ -1,0 +1,129 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     th:replace="~{layout/base :: layout(~{::section})}">
+  <section class="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
+
+    <a href="/admin/collections" class="text-sm font-semibold text-white/70 hover:text-white">← Back</a>
+
+    <div class="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+      <div>
+        <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+          <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
+          Admin • Collection
+        </p>
+        <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl"
+            th:text="${collection.name}">Men</h1>
+        <p class="mt-2 text-white/70">
+          <span th:text="${collection.status}">PUBLISHED</span>
+          <span class="text-white/30">•</span>
+          <span th:text="${collection.slug}">men</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Edit collection -->
+    <div class="mt-8 rounded-3xl border border-white/10 bg-[#121212] p-6">
+      <h2 class="text-lg font-semibold">Details</h2>
+
+      <form th:action="@{'/admin/collections/' + ${collection.id}}" method="post" class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div class="md:col-span-1">
+          <label class="text-sm text-white/70">Name</label>
+          <input name="name" th:value="${collection.name}" required
+                 class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                 style="--tw-ring-color:#18FFEA;" />
+        </div>
+
+        <div class="md:col-span-1">
+          <label class="text-sm text-white/70">Slug</label>
+          <input name="slug" th:value="${collection.slug}"
+                 class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                 style="--tw-ring-color:#18FFEA;" />
+        </div>
+
+        <div class="md:col-span-1">
+          <label class="text-sm text-white/70">Status</label>
+          <select name="status"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                  style="--tw-ring-color:#18FFEA;">
+            <option value="DRAFT" th:selected="${collection.status == 'DRAFT'}">DRAFT</option>
+            <option value="PUBLISHED" th:selected="${collection.status == 'PUBLISHED'}">PUBLISHED</option>
+            <option value="ARCHIVED" th:selected="${collection.status == 'ARCHIVED'}">ARCHIVED</option>
+          </select>
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="text-sm text-white/70">Description</label>
+          <textarea name="description" rows="4"
+                    class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                    style="--tw-ring-color:#18FFEA;"
+                    th:text="${collection.description}"></textarea>
+        </div>
+
+        <div class="md:col-span-2 flex justify-end">
+          <button type="submit"
+                  class="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow hover:teal-glow-strong"
+                  style="background:#18FFEA;">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Manage contents -->
+    <div class="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-2">
+      <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+        <h2 class="text-lg font-semibold">Add design</h2>
+
+        <form th:action="@{'/admin/collections/' + ${collection.id} + '/add-design'}" method="post"
+              class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <select name="designId"
+                  class="w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                  style="--tw-ring-color:#18FFEA;">
+            <option th:each="d : ${allDesigns}" th:value="${d.id}"
+                    th:text="${d.title + ' (' + d.status + ')'}">Design</option>
+          </select>
+
+          <button type="submit"
+                  class="w-full sm:w-auto rounded-2xl px-5 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow hover:teal-glow-strong"
+                  style="background:#18FFEA;">
+            Add
+          </button>
+        </form>
+
+        <p class="mt-3 text-xs text-white/50">Tip: Create designs first in Admin → Designs.</p>
+      </div>
+
+      <div class="rounded-3xl border border-white/10 bg-[#121212] p-6">
+        <h2 class="text-lg font-semibold">Designs in this collection</h2>
+
+        <div class="mt-4 space-y-3">
+          <div th:if="${#lists.isEmpty(items)}" class="text-sm text-white/60">
+            No designs yet. Add one on the left.
+          </div>
+
+          <div th:each="it : ${items}"
+               class="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-black/30 px-4 py-3">
+            <div>
+              <div class="font-semibold text-white/90" th:text="${it['title']}">Title</div>
+              <div class="text-xs text-white/60">
+                <span th:text="${it['status']}">DRAFT</span>
+                <span class="text-white/30">•</span>
+                <span th:text="${it['slug']}">slug</span>
+                <span class="text-white/30">•</span>
+                pos <span th:text="${it['position']}">0</span>
+              </div>
+            </div>
+
+            <form th:action="@{'/admin/collections/' + ${collection.id} + '/remove-design'}" method="post">
+              <input type="hidden" name="designId" th:value="${it['id']}" />
+              <button type="submit"
+                      class="rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white/80 hover:bg-white/10">
+                Remove
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</div>

@@ -29,12 +29,20 @@ public class GlobalUserModelAdvice {
 
         if (!loggedIn) {
             model.addAttribute("firstName", "");
+            model.addAttribute("isAdmin", false);
             return;
         }
 
+        boolean isAdmin = authentication.getAuthorities() != null
+                && authentication.getAuthorities().stream()
+                .anyMatch(a -> "ROLE_ADMIN".equals(a.getAuthority()));
+
+        model.addAttribute("isAdmin", isAdmin);
+
         String email = authentication.getName(); // username == email
-        userRepository.findByEmail(email).ifPresent(user ->
-                model.addAttribute("firstName", NameUtils.firstName(user.getFullName()))
+        userRepository.findByEmail(email).ifPresentOrElse(
+                user -> model.addAttribute("firstName", NameUtils.firstName(user.getFullName())),
+                () -> model.addAttribute("firstName", "")
         );
     }
 }

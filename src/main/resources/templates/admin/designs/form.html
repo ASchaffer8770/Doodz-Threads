@@ -1,0 +1,70 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     th:replace="~{layout/base :: layout(~{::section})}">
+  <section class="mx-auto w-full max-w-3xl px-4 py-10 md:px-6 md:py-14">
+    <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+      <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
+      Admin • Designs
+    </p>
+
+    <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl"
+        th:text="${design.id == null ? 'New design' : 'Edit design'}">New design</h1>
+
+    <div class="mt-8 rounded-3xl border border-white/10 bg-[#121212] p-6">
+      <form th:action="${design.id == null} ? @{/admin/designs} : @{'/admin/designs/' + ${design.id}}"
+            method="post"
+            class="space-y-5">
+
+        <div>
+          <label class="text-sm text-white/70">Title</label>
+          <input name="title"
+                 th:value="${design.title}"
+                 required
+                 class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2"
+                 style="--tw-ring-color: #18FFEA;" />
+        </div>
+
+        <div>
+          <label class="text-sm text-white/70">Slug (optional)</label>
+          <input name="slug"
+                 th:value="${design.slug}"
+                 placeholder="auto-generated if blank"
+                 class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2"
+                 style="--tw-ring-color: #18FFEA;" />
+        </div>
+
+        <div>
+          <label class="text-sm text-white/70">Status</label>
+          <select name="status"
+                  class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white outline-none focus:ring-2"
+                  style="--tw-ring-color: #18FFEA;">
+            <option value="DRAFT" th:selected="${design.status == 'DRAFT'}">DRAFT</option>
+            <option value="PUBLISHED" th:selected="${design.status == 'PUBLISHED'}">PUBLISHED</option>
+            <option value="ARCHIVED" th:selected="${design.status == 'ARCHIVED'}">ARCHIVED</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="text-sm text-white/70">Description</label>
+          <textarea name="description"
+                    rows="6"
+                    class="mt-2 w-full rounded-2xl border border-white/10 bg-[#0A0A0A] px-4 py-3 text-sm text-white placeholder:text-white/40 outline-none focus:ring-2"
+                    style="--tw-ring-color: #18FFEA;"
+                    th:text="${design.description}"></textarea>
+        </div>
+
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <a href="/admin/designs"
+             class="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/5 px-6 py-3 text-sm font-semibold text-white/90 hover:bg-white/10">
+            Back
+          </a>
+
+          <button type="submit"
+                  class="inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-semibold text-[#0A0A0A] teal-glow hover:teal-glow-strong"
+                  style="background:#18FFEA;">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

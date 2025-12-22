@@ -4,8 +4,10 @@
 
 <header th:fragment="siteHeader"
         class="sticky top-0 z-50 border-b border-white/10 bg-[#0A0A0A]/80 backdrop-blur">
-    <div class="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-        <a href="/" class="group inline-flex items-center gap-2">
+    <div class="mx-auto flex w-full max-w-6xl items-center justify-between gap-4 px-4 py-3 md:px-6">
+
+        <!-- Brand -->
+        <a href="/" class="group inline-flex items-center gap-2 shrink-0">
             <div class="h-8 w-8 rounded-lg border border-white/10 bg-[#121212] grid place-items-center">
                 <span class="text-sm font-extrabold tracking-tight text-white">DT</span>
             </div>
@@ -14,29 +16,84 @@
             </span>
         </a>
 
+        <!-- Primary nav (desktop) -->
+        <nav class="hidden md:flex items-center gap-1">
+            <a href="/"
+               class="rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">
+                Home
+            </a>
+
+            <a href="/#collections"
+               class="rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">
+                Collections
+            </a>
+
+            <a href="/#drops"
+               class="rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">
+                Drops
+            </a>
+
+            <a th:if="${loggedIn == true}"
+               href="/account"
+               class="rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">
+                Account
+            </a>
+
+            <a th:if="${isAdmin == true}"
+               href="/admin"
+               class="rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">
+                Admin
+            </a>
+        </nav>
+
+        <!-- Right side actions -->
         <div class="flex items-center gap-3">
-            <a href="#drop-list"
-               class="hidden rounded-xl border border-white/10 bg-[#121212] px-3 py-2 text-sm font-medium text-white/80 hover:text-white md:inline-flex">
+
+            <!-- Join list -->
+            <a href="/#drop-list"
+               class="hidden rounded-xl border border-white/10 bg-[#121212] px-3 py-2 text-sm font-medium text-white/80 hover:text-white hover:border-white/20 md:inline-flex">
                 Join list
             </a>
 
-            <a href="#collections"
-               class="inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-[#0A0A0A]"
+            <!-- Shop -->
+            <a href="/#drops"
+               class="hidden md:inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-semibold text-[#0A0A0A]"
                style="background:#18FFEA; box-shadow: 0 0 22px rgba(24,255,234,.25);">
                 Shop The Collection
             </a>
 
-            <!-- Account -->
-            <div class="flex items-center gap-3">
-                <div th:if="${loggedIn == true}" class="hidden sm:flex items-center gap-3">
-                    <span class="text-sm text-white/70">
-                        Hi, <span class="font-semibold text-white" th:text="${firstName}">Friend</span> 👋
-                    </span>
-                </div>
+            <!-- Logged in greeting -->
+            <div th:if="${loggedIn == true}" class="hidden lg:flex items-center gap-3">
+                <span class="text-sm text-white/70">
+                    Hi, <span class="font-semibold text-white" th:text="${firstName}"></span> 👋
+                </span>
+            </div>
 
+            <!-- Account dropdown / Login icon -->
+            <div class="relative" data-account-menu>
+                <!-- Logged in: button that toggles dropdown -->
+                <button th:if="${loggedIn == true}"
+                        type="button"
+                        aria-label="Account menu"
+                        aria-haspopup="menu"
+                        aria-expanded="false"
+                        data-account-button
+                        class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#121212] text-white/80 hover:text-white hover:border-white/20">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         fill="none" viewBox="0 0 24 24"
+                         stroke-width="1.8" stroke="currentColor"
+                         class="h-5 w-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                              d="M4.5 20.25a7.5 7.5 0 0115 0" />
+                    </svg>
+                </button>
+
+                <!-- Logged out: link to login -->
                 <a th:unless="${loggedIn == true}"
                    href="/login"
-                   aria-label="Account"
+                   aria-label="Login"
                    class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-[#121212] text-white/80 hover:text-white hover:border-white/20">
                     <svg xmlns="http://www.w3.org/2000/svg"
                          fill="none" viewBox="0 0 24 24"
@@ -48,7 +105,63 @@
                               d="M4.5 20.25a7.5 7.5 0 0115 0" />
                     </svg>
                 </a>
+
+                <!-- Dropdown menu -->
+                <div th:if="${loggedIn == true}"
+                     data-account-dropdown
+                     class="invisible opacity-0 translate-y-1 pointer-events-none absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-white/10 bg-[#0A0A0A] shadow-xl transition"
+                     style="box-shadow: 0 0 0 1px rgba(24,255,234,.12), 0 18px 45px rgba(0,0,0,.55);">
+                    <div class="px-4 py-3 border-b border-white/10">
+                        <p class="text-xs text-white/50">Signed In As</p>
+                        <p class="mt-1 text-sm font-semibold text-white truncate" th:text="${firstName}"></p>
+                    </div>
+
+                    <div class="p-2">
+                        <a href="/account"
+                           class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white">
+                            Account Dashboard
+                        </a>
+
+                        <a th:if="${isAdmin == true}"
+                           href="/admin"
+                           class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white">
+                            Admin
+                        </a>
+
+                        <div class="my-2 h-px bg-white/10"></div>
+
+                        <!-- Logout MUST be POST -->
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit"
+                                    class="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white/80 hover:bg-white/5 hover:text-white">
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                </div>
             </div>
+
+            <!-- Mobile menu button (optional, simple) -->
+            <a href="/"
+               class="md:hidden inline-flex items-center justify-center rounded-xl border border-white/10 bg-[#121212] px-3 py-2 text-sm font-semibold text-white/80 hover:text-white hover:border-white/20">
+                Menu
+            </a>
+        </div>
+    </div>
+
+    <!-- Mobile nav row (simple + no JS) -->
+    <div class="md:hidden border-t border-white/10">
+        <div class="mx-auto flex w-full max-w-6xl items-center gap-2 overflow-x-auto px-4 py-2">
+            <a href="/" class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Home</a>
+            <a href="/#collections" class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Collections</a>
+            <a href="/#drops" class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Drops</a>
+            <a href="/#drop-list" class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Join list</a>
+
+            <a th:if="${loggedIn == true}" href="/account"
+               class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Account</a>
+
+            <a th:if="${isAdmin == true}" href="/admin"
+               class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold text-white/70 hover:text-white hover:bg-white/5">Admin</a>
         </div>
     </div>
 </header>

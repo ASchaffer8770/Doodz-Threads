@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content)">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title th:text="${title}">Doodz Threads</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root { --dt-teal: #18FFEA; --dt-black: #0A0A0A; --dt-card: #121212; }
+    ::selection { background: rgba(24,255,234,.25); }
+    .teal-glow { box-shadow: 0 0 22px rgba(24,255,234,.25); }
+    .teal-glow-strong { box-shadow: 0 0 40px rgba(24,255,234,.35); }
+  </style>
+</head>
+
+<body class="min-h-screen bg-[#0A0A0A] text-white">
+<div th:replace="~{fragments/header :: siteHeader}"></div>
+
+<main th:replace="${content}"></main>
+
+<footer class="border-t border-white/10">
+  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
+    <div class="flex items-center gap-2">
+      <span class="font-semibold text-white">Doodz Threads</span>
+      <span class="text-white/30">•</span>
+      <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span></span>
+    </div>
+
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-white">Instagram</a>
+      <a href="#" class="hover:text-white">TikTok</a>
+      <a href="#" class="hover:text-white">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    function closeAll() {
+      document.querySelectorAll('[data-account-menu]').forEach(menu => {
+        const btn = menu.querySelector('[data-account-button]');
+        const dd = menu.querySelector('[data-account-dropdown]');
+        if (!btn || !dd) return;
+        dd.classList.add('invisible','opacity-0','translate-y-1','pointer-events-none');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const menu = e.target.closest('[data-account-menu]');
+      if (!menu) return closeAll();
+
+      const btn = e.target.closest('[data-account-button]');
+      const dd = menu.querySelector('[data-account-dropdown]');
+      if (!btn || !dd) return;
+
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      closeAll();
+      if (!isOpen) {
+        dd.classList.remove('invisible','opacity-0','translate-y-1','pointer-events-none');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeAll();
+    });
+  })();
+</script>
+
+</body>
+</html>
