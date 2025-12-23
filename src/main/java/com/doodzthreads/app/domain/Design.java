@@ -23,6 +23,9 @@ public class Design {
     @Column(nullable = false, length = 32)
     private String status = "DRAFT"; // DRAFT, PUBLISHED, ARCHIVED
 
+    @Column(name = "gelato_product_id", length = 64, unique = false)
+    private String gelatoProductId;
+
     @Column(name = "hero_image_path", length = 500)
     private String heroImagePath;
 
@@ -59,6 +62,9 @@ public class Design {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public String getGelatoProductId() { return gelatoProductId; }
+    public void setGelatoProductId(String gelatoProductId) { this.gelatoProductId = gelatoProductId; }
 
     public String getHeroImagePath() { return heroImagePath; }
     public void setHeroImagePath(String heroImagePath) { this.heroImagePath = heroImagePath; }

@@ -1,7 +1,7 @@
 <div xmlns:th="http://www.thymeleaf.org"
      th:replace="~{layout/base :: layout(~{::section})}">
   <section class="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
-    <div class="flex items-end justify-between gap-6">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
           <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
@@ -10,6 +10,11 @@
         <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl">Collections</h1>
         <p class="mt-2 text-white/70">Core browse categories: Men / Women / Kids.</p>
       </div>
+
+      <a href="/admin"
+         class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 hover:bg-white/10">
+        Back to dashboard
+      </a>
     </div>
 
     <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">

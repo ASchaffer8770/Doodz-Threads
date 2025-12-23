@@ -2,22 +2,27 @@
      th:replace="~{layout/base :: layout(~{::section})}">
   <section class="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
 
-    <a href="/admin/collections" class="text-sm font-semibold text-white/70 hover:text-white">← Back</a>
-
-    <div class="mt-4 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div>
         <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
           <span class="h-1.5 w-1.5 rounded-full" style="background:#18FFEA;"></span>
           Admin • Collection
         </p>
+
         <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl"
             th:text="${collection.name}">Men</h1>
+
         <p class="mt-2 text-white/70">
           <span th:text="${collection.status}">PUBLISHED</span>
           <span class="text-white/30">•</span>
           <span th:text="${collection.slug}">men</span>
         </p>
       </div>
+
+      <a href="/admin/collections"
+         class="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white/80 hover:bg-white/10">
+        Back to collections
+      </a>
     </div>
 
     <!-- Edit collection -->

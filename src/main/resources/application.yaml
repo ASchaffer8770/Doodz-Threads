@@ -7,6 +7,9 @@ spring:
     username: alex
     password: ${DB_PASSWORD:}
 
+  config:
+    import: optional:application-secrets.yaml
+
   jpa:
     open-in-view: false
     hibernate:
@@ -23,6 +26,11 @@ spring:
 
   thymeleaf:
     cache: false
+
+gelato:
+  baseUrl: https://ecommerce.gelatoapis.com
+  apiKey: ${GELATO_API_KEY:}
+  storeId: ${GELATO_STORE_ID:}
 
 logging:
   level:

@@ -47,6 +47,7 @@ out/
 .env
 .env.*
 application-local.yaml
+application-secrets.yaml
 
 ### Frontend / Tooling (future-proof) ###
 node_modules/

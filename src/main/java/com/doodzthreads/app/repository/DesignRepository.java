@@ -8,4 +8,7 @@ import java.util.Optional;
 public interface DesignRepository extends JpaRepository<Design, Long> {
     Optional<Design> findBySlug(String slug);
     boolean existsBySlug(String slug);
+    boolean existsBySlugAndIdNot(String slug, Long id);
+    boolean existsByGelatoProductId(String gelatoProductId);
+
 }
