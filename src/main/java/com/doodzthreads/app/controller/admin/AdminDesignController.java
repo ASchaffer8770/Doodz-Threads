@@ -163,4 +163,14 @@ public class AdminDesignController {
 
         return candidate;
     }
+
+    //Delete Design
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id) {
+        designRepository.deleteFromCollectionDesigns(id);
+        designRepository.deleteFromDropDesigns(id);
+        designRepository.deleteById(id);
+        return "redirect:/admin/designs";
+    }
+
 }

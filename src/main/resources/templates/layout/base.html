@@ -16,26 +16,15 @@
   </style>
 </head>
 
-<body class="min-h-screen bg-[#0A0A0A] text-white">
+<body class="min-h-screen flex flex-col bg-[#0A0A0A] text-white">
 <div th:replace="~{fragments/header :: siteHeader}"></div>
 
-<main th:replace="${content}"></main>
+<main class="flex-1">
+  <div th:replace="${content}"></div>
+</main>
 
-<footer class="border-t border-white/10">
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
-    <div class="flex items-center gap-2">
-      <span class="font-semibold text-white">Doodz Threads</span>
-      <span class="text-white/30">•</span>
-      <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span></span>
-    </div>
-
-    <div class="flex gap-6">
-      <a href="#" class="hover:text-white">Instagram</a>
-      <a href="#" class="hover:text-white">TikTok</a>
-      <a href="#" class="hover:text-white">Contact</a>
-    </div>
-  </div>
-</footer>
+<!-- Global footer fragment -->
+<div th:replace="~{fragments/footer :: siteFooter}"></div>
 
 <script>
   (function () {

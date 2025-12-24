@@ -73,6 +73,27 @@ public class AdminGelatoImportController {
         return "redirect:/admin/designs";
     }
 
+    @PostMapping("/backfill-images")
+    public String backfillImages() {
+
+        List<Design> designs = designRepository.findAll().stream()
+                .filter(d -> d.getGelatoProductId() != null)
+                .filter(d -> d.getHeroImagePath() == null || d.getHeroImagePath().isBlank())
+                .toList();
+
+        for (Design d : designs) {
+            var detail = gelato.getProduct(d.getGelatoProductId());
+            String image = bestImage(detail);
+
+            if (image != null) {
+                d.setHeroImagePath(image);
+                designRepository.save(d);
+            }
+        }
+
+        return "redirect:/admin/designs";
+    }
+
     private String uniqueSlugFromTitle(String title) {
         String base = SlugUtils.slugify(title);
         if (base.isBlank()) base = "design";
@@ -85,11 +106,16 @@ public class AdminGelatoImportController {
     }
 
     private String bestImage(com.doodzthreads.app.integrations.gelato.dto.GelatoProductDetail detail) {
-        // Keep it simple: if DTO exposes images, prefer first
-        if (detail.images() != null && !detail.images().isEmpty()) {
-            var img = detail.images().get(0);
-            if (img != null && img.url() != null && !img.url().isBlank()) return img.url();
+        if (detail == null) return null;
+
+        if (detail.externalThumbnailUrl() != null && !detail.externalThumbnailUrl().isBlank()) {
+            return detail.externalThumbnailUrl();
         }
+        if (detail.previewUrl() != null && !detail.previewUrl().isBlank()) {
+            return detail.previewUrl();
+        }
+
         return null;
     }
+
 }

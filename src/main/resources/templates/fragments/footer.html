@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="siteFooter" class="border-t border-white/10">
+  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
+    <div class="flex items-center gap-2">
+        <span class="font-semibold text-white"
+              th:text="${title != null ? title : 'Doodz Threads'}">Doodz Threads</span>
+      <span class="text-white/30">•</span>
+      <span>
+          © <span th:text="${#temporals.format(#temporals.createNow(), 'yyyy')}">2025</span>
+        </span>
+    </div>
+
+    <div class="flex gap-6">
+      <a href="#" class="hover:text-white">Instagram</a>
+      <a href="#" class="hover:text-white">TikTok</a>
+      <a href="#" class="hover:text-white">Contact</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

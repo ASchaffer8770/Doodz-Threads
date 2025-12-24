@@ -19,7 +19,12 @@
 
           <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl">
             Welcome back,
-            <span class="font-extrabold" th:text="${firstName}">Friend</span>
+            <span class="font-extrabold"
+                  th:text="${firstName != null and !#strings.isEmpty(firstName)
+                    ? #strings.capitalize(#strings.toLowerCase(firstName))
+                    : 'Friend'}">
+              Friend
+            </span>
           </h1>
 
           <p class="mt-2 text-white/70">

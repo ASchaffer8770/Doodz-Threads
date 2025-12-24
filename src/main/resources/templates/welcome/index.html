@@ -34,9 +34,14 @@
         Member access unlocked
       </p>
 
-      <h1 class="mt-6 text-4xl font-extrabold tracking-tight md:text-6xl">
-        <span class="text-white/80">Welcome</span>
-        <span class="block" th:text="${firstName != null and !#strings.isEmpty(firstName)} ? ${firstName} : 'back'">back</span>
+      <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-4xl">
+        Welcome back,
+        <span class="font-extrabold"
+              th:text="${firstName != null and !#strings.isEmpty(firstName)
+                    ? #strings.capitalize(#strings.toLowerCase(firstName))
+                    : 'Friend'}">
+              Friend
+            </span>
       </h1>
 
       <div class="mt-3 h-1 w-24 rounded-full" style="background:#18FFEA;"></div>
@@ -90,15 +95,5 @@
     </div>
   </section>
 </main>
-
-<footer class="border-t border-white/10">
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-10 text-sm text-white/60 md:flex-row md:items-center md:justify-between md:px-6">
-    <div class="flex items-center gap-2">
-      <span class="font-semibold text-white" th:text="${title}">Doodz Threads</span>
-      <span class="text-white/30">•</span>
-      <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2025</span></span>
-    </div>
-  </div>
-</footer>
 </body>
 </html>

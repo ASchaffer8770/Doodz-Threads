@@ -1,0 +1,69 @@
+<div xmlns:th="http://www.thymeleaf.org"
+     th:replace="~{layout/base :: layout(~{::section})}">
+  <section class="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
+
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight text-white">Collections</h1>
+        <p class="mt-1 text-sm text-white/70">Published collections ready to shop.</p>
+      </div>
+
+      <form method="get" action="/collections"
+            class="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-end sm:gap-3 md:w-auto">
+
+        <input name="q" th:value="${q}"
+               class="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/40 outline-none focus:border-white/20 sm:w-72"
+               placeholder="Search collections..." />
+
+        <select name="sort"
+                class="w-full rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white outline-none focus:border-white/20 sm:w-48">
+          <option value="newest" th:selected="${sort == 'newest'}">Newest</option>
+          <option value="oldest" th:selected="${sort == 'oldest'}">Oldest</option>
+          <option value="az" th:selected="${sort == 'az'}">A → Z</option>
+          <option value="za" th:selected="${sort == 'za'}">Z → A</option>
+        </select>
+
+        <button type="submit"
+                class="inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/10 px-4 py-2 text-sm font-medium text-white hover:bg-white/15">
+          Apply
+        </button>
+      </form>
+    </div>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <a th:each="c : ${collections.content}"
+         th:href="@{/collections/{slug}(slug=${c.slug})}"
+         class="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
+
+        <h3 class="text-base font-semibold text-white" th:text="${c.name}">Collection Name</h3>
+        <p class="mt-1 line-clamp-2 text-sm text-white/70"
+           th:text="${c.description} ?: '—'">Description</p>
+
+        <div class="mt-4 flex items-center justify-between text-xs text-white/50">
+          <span>View collection</span>
+          <span class="opacity-70">→</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="mt-8 flex items-center justify-between gap-3">
+      <div class="text-sm text-white/60">
+        Page <span th:text="${collections.number + 1}">1</span> of <span th:text="${collections.totalPages}">1</span>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a th:if="${collections.hasPrevious()}"
+           th:href="@{/collections(q=${q}, sort=${sort}, page=${collections.number - 1})}"
+           class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10">
+          Prev
+        </a>
+
+        <a th:if="${collections.hasNext()}"
+           th:href="@{/collections(q=${q}, sort=${sort}, page=${collections.number + 1})}"
+           class="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white hover:bg-white/10">
+          Next
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

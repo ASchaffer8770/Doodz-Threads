@@ -6,6 +6,8 @@ public record GelatoProductDetail(
         String id,
         String title,
         String description,
+        String previewUrl,
+        String externalThumbnailUrl,
         List<GelatoImage> images
 ) {
     public String bestImageUrl() {
