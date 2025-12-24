@@ -2,6 +2,10 @@ package com.doodzthreads.app.domain;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "collections")
@@ -39,6 +43,13 @@ public class Collection {
         this.updatedAt = now;
         if (this.status == null || this.status.isBlank()) this.status = "DRAFT";
     }
+
+    @OneToMany(mappedBy = "collection", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OrderBy("position ASC")
+    private List<CollectionDesign> collectionDesigns = new ArrayList<>();
+
+    public List<CollectionDesign> getCollectionDesigns() { return collectionDesigns; }
+
 
     @PreUpdate
     protected void onUpdate() {

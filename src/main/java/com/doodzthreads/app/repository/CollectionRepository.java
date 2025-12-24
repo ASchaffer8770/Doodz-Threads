@@ -24,4 +24,16 @@ public interface CollectionRepository extends JpaRepository<Collection, Long> {
           )
         """)
     Page<Collection> searchPublished(@Param("q") String q, Pageable pageable);
+
+    @Query("""
+       select distinct c
+       from Collection c
+       left join fetch c.collectionDesigns cd
+       left join fetch cd.design d
+       where c.slug = :slug
+         and c.status = 'PUBLISHED'
+       order by cd.position asc
+       """)
+    Optional<Collection> findPublishedBySlugWithOrderedDesigns(@Param("slug") String slug);
+
 }

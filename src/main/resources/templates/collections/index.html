@@ -1,7 +1,9 @@
 <div xmlns:th="http://www.thymeleaf.org"
      th:replace="~{layout/base :: layout(~{::section})}">
+
   <section class="mx-auto w-full max-w-6xl px-4 py-10 md:px-6 md:py-14">
 
+    <!-- Header -->
     <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
       <div>
         <h1 class="text-2xl font-semibold tracking-tight text-white">Collections</h1>
@@ -30,25 +32,64 @@
       </form>
     </div>
 
-    <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Grid -->
+    <div class="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+
       <a th:each="c : ${collections.content}"
          th:href="@{/collections/{slug}(slug=${c.slug})}"
-         class="group rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:bg-white/10">
+         class="group overflow-hidden rounded-2xl border border-white/10 bg-white/5 transition hover:bg-white/10">
 
-        <h3 class="text-base font-semibold text-white" th:text="${c.name}">Collection Name</h3>
-        <p class="mt-1 line-clamp-2 text-sm text-white/70"
-           th:text="${c.description} ?: '—'">Description</p>
+        <!-- Hero image -->
+        <div class="relative aspect-[16/10] w-full overflow-hidden bg-[#121212]">
 
-        <div class="mt-4 flex items-center justify-between text-xs text-white/50">
-          <span>View collection</span>
-          <span class="opacity-70">→</span>
+          <!-- Image if present -->
+          <div th:if="${c.heroImagePath != null and !#strings.isEmpty(c.heroImagePath)}"
+               class="absolute inset-0 bg-cover bg-center transition-transform duration-300 group-hover:scale-[1.04]"
+               th:style="|background-image:url('${c.heroImagePath}');|">
+          </div>
+
+          <!-- Fallback gradient -->
+          <div th:if="${c.heroImagePath == null or #strings.isEmpty(c.heroImagePath)}"
+               class="absolute inset-0 opacity-70"
+               style="background:
+                 radial-gradient(circle at 30% 30%, rgba(24,255,234,.35), transparent 55%),
+                 radial-gradient(circle at 80% 70%, rgba(255,255,255,.16), transparent 60%);">
+          </div>
+
+          <!-- Overlay -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+
+          <!-- Badge -->
+          <div class="absolute left-4 top-4 rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs text-white/70 backdrop-blur">
+            Collection
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div class="p-5">
+          <h3 class="text-base font-semibold text-white" th:text="${c.name}">
+            Collection Name
+          </h3>
+
+          <p class="mt-1 line-clamp-2 text-sm text-white/70"
+             th:text="${#strings.isEmpty(c.description) ? '—' : c.description}">
+            Description
+          </p>
+
+          <div class="mt-4 flex items-center justify-between text-xs text-white/50">
+            <span>View collection</span>
+            <span class="opacity-70">→</span>
+          </div>
         </div>
       </a>
+
     </div>
 
+    <!-- Pagination -->
     <div class="mt-8 flex items-center justify-between gap-3">
       <div class="text-sm text-white/60">
-        Page <span th:text="${collections.number + 1}">1</span> of <span th:text="${collections.totalPages}">1</span>
+        Page <span th:text="${collections.number + 1}">1</span>
+        of <span th:text="${collections.totalPages}">1</span>
       </div>
 
       <div class="flex items-center gap-2">
@@ -65,5 +106,6 @@
         </a>
       </div>
     </div>
+
   </section>
 </div>

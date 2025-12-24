@@ -3,9 +3,11 @@ package com.doodzthreads.app.controller;
 import com.doodzthreads.app.domain.Collection;
 import com.doodzthreads.app.repository.CollectionRepository;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("/collections")
@@ -32,6 +34,19 @@ public class CollectionsController {
         model.addAttribute("collections", collections);
 
         return "collections/index";
+    }
+
+    @GetMapping("/{slug}")
+    public String showCollection(@PathVariable String slug, Model model) {
+
+        Collection collection = collectionRepository
+                .findPublishedBySlugWithOrderedDesigns(slug)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        model.addAttribute("title", collection.getName() + " • Doodz Threads");
+        model.addAttribute("collection", collection);
+
+        return "collections/show";
     }
 
     private Sort toSort(String sort) {
